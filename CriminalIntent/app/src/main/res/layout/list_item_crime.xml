@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="my.rockpilgrim.criminalintent.data.ConstantsKt" />
+        <import type="android.view.View" />
+        <variable
+            name="crime"
+            type="my.rockpilgrim.criminalintent.data.Crime" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/crimeTitle"
+            android:text="@{crime.title}"
+            tools:text="@string/crime_title"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:elegantTextHeight="true"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@id/stateImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/crimeDate"
+            app:dateFormat="@{crime.date}"
+            tools:text="@string/crime_date"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/stateImageView"
+            app:layout_constraintTop_toBottomOf="@id/crimeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/stateImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{crime.solved?  View.VISIBLE : View.GONE}"
+            android:src="@drawable/ic_state"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
