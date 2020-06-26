@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="crime">Преступление</string>
+    <string name="crime_title_hint">Введите название преступления</string>
+    <string name="crime_title_label">Название</string>
+    <string name="crime_details_label">Подробно</string>
+    <string name="crime_solved_label">Решено</string>
+    <string name="add">Добавить</string>
+    <string name="crime_title">Название Преступления</string>
+    <string name="crime_date">Дата</string>
+    <string name="police">Police</string>
+
+    <string name="crime_solved">Решено</string>
+    <string name="date_picker_title">Дата совершения</string>
+    <string name="ok">OK</string>
+
+    <string name="new_crime">Новое преступление</string>
+    <string name="show_subtitle">Показать Подзаголовок</string>
+    <string name="hide_subtitle">Спрятать Подзаголовок</string>
+    <string name="subtitle_format">%1$d преступления</string>
+    <string name="require_police">Вызвать полицию?</string>
+    <string name="delete">Удалить</string>
+    <string name="add_crime">Добавить Преступление</string>
+    <string name="crime_suspect_text">Выбрать Подозреваемого</string>
+    <string name="crime_report_text">Отправить Отчёт</string>
+    <string name="crime_report">%1$s!
+        Преступление обнаружено в %2$s. %3$s, и %4$s
+    </string>
+    <string name="crime_report_solved">Преступление раскрыто</string>
+    <string name="crime_report_unsolved">Преступление не раскрыто</string>
+    <string name="crime_report_suspect">подозреваемый %s.</string>
+    <string name="crime_report_no_suspect">нет позозреваемых</string>
+    <string name="crime_report_subject">CriminalIntent Криминальный Отчет</string>
+    <string name="send_report">Отправить криминальный отчет</string>
+    <string name="crime_picture_descibe">Фото преступления</string>
+    <string name="get_photo_description">Сделать фото</string>
+    <string name="detail_photo_title">Фото Преступления</string>
+
+    // Made spryazeniya
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d преступление</item>
+        <item quantity="few">%1$d преступленя</item>
+        <item quantity="many">%1$d преступлений</item>
+        <item quantity="other">%1$d преступленя</item>
+    </plurals>
+</resources>

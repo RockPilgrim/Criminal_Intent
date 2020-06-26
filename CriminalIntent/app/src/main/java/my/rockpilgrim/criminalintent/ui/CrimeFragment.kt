@@ -1,6 +1,7 @@
 package my.rockpilgrim.criminalintent.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -31,22 +32,41 @@ import my.rockpilgrim.criminalintent.databinding.FragmentCrimeBinding
 import my.rockpilgrim.criminalintent.utils.DataFormation
 import my.rockpilgrim.criminalintent.utils.PictureUtils
 import java.io.File
-import java.net.URI
 import java.util.*
 
-class CrimeFragment : Fragment() {
-
-
-    private val TAG = "CrimeFragment"
-    private val ARG_CRIME_ID = "crime_id"
-    private val DIALOG_DATE = "DialogDate"
-    private val REQUEST_DATE = 0
-    private val REQUEST_CONTACT = 1
-    private val REQUEST_PHOTO = 2
+class CrimeFragment private constructor() : Fragment() {
 
     private lateinit var crime: Crime
     private lateinit var photoFile: File
     private lateinit var root: View
+    private var callbacks: CallBacks? = null
+
+    companion object {
+        private const val TAG = "CrimeFragment"
+        private const val ARG_CRIME_ID = "crime_id"
+        private const val DIALOG_DATE = "DialogDate"
+        private const val DIALOG_PHOTO = "DialogPhoto"
+        private const val REQUEST_DATE = 0
+        private const val REQUEST_CONTACT = 1
+        private const val REQUEST_PHOTO = 2
+
+        fun newInstance(crimeId: UUID): CrimeFragment {
+            val args:Bundle=Bundle().apply {
+                putSerializable(ARG_CRIME_ID, crimeId)
+            }
+            return CrimeFragment().apply {
+                arguments = args
+            }
+        }
+    }
+    public interface CallBacks{
+        fun onCrimeUpdated(crime: Crime)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as CallBacks
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,21 +89,13 @@ class CrimeFragment : Fragment() {
         return root
     }
 
-    fun newInstance(crimeId: UUID): CrimeFragment {
-        val args:Bundle=Bundle().apply {
-            putSerializable(ARG_CRIME_ID, crimeId)
-        }
-        return CrimeFragment().apply {
-            arguments = args
-        }
-    }
-
     // Init User Interface components
     private fun initUI(binding: FragmentCrimeBinding) {
         // EditText
         binding.crimeTitle.addTextChangedListener(onTextChanged = {
             text, start, count, after ->
             crime.title = text.toString()
+            updateCrime()
         })
 
 
@@ -98,6 +110,7 @@ class CrimeFragment : Fragment() {
         // CheckBox solved
         binding.crimeSolved.setOnCheckedChangeListener { buttonView, isChecked ->
             crime.isSolved = isChecked
+            updateCrime()
         }
         binding.crimePolice.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -105,12 +118,15 @@ class CrimeFragment : Fragment() {
             } else {
                 crime.requiresPolice = NO_POLICE
             }
+            updateCrime()
         }
 
         // Delete
         binding.deleteButton.setOnClickListener {
             CrimeLab.initCrimeLab(requireContext()).delete(crime)
-            requireActivity().finish()
+            // ToDO change this!!! some how
+            parentFragmentManager.popBackStack()
+//            requireActivity().finish()
         }
 
         // Send report
@@ -162,8 +178,15 @@ class CrimeFragment : Fragment() {
             }
             startActivityForResult(captureImage, REQUEST_PHOTO)
         }
-        binding.crimePhoto
         updatePhotoView()
+
+        // Show picture
+        binding.crimePhoto.setOnClickListener {
+            val dialog = DetailCrimePhotoFragment().newInstance(photoFile.path)
+            // Don't work with .apply
+            dialog.show(parentFragmentManager, DIALOG_PHOTO)
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -176,6 +199,7 @@ class CrimeFragment : Fragment() {
             val date = data!!.getSerializableExtra(DatePickerFragment().EXTRA_DATE) as Date
             crime.date = date
             updateDate()
+            updateCrime()
         }else if (requestCode == REQUEST_CONTACT && data != null) {
             val contactURI: Uri = data.data!!
 
@@ -192,6 +216,7 @@ class CrimeFragment : Fragment() {
                 val suspect = it.getString(0)
                 crime.suspect = suspect
                 crimeSuspect.text = suspect
+                updateCrime()
             }
         }else if (requestCode == REQUEST_PHOTO) {
             val uri: Uri = FileProvider.getUriForFile(
@@ -201,11 +226,17 @@ class CrimeFragment : Fragment() {
 
             requireActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             updatePhotoView()
+            updateCrime()
         }
     }
 
     private fun updateDate() {
         crimeDateButton.text = DataFormation.getDate(crime.date)
+    }
+
+    private fun updateCrime() {
+        CrimeLab.initCrimeLab(requireActivity()).updateCrime(crime = crime)
+        callbacks?.onCrimeUpdated(crime)
     }
 
     private fun getCrimeReport(): String {
@@ -239,5 +270,10 @@ class CrimeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         CrimeLab.initCrimeLab(requireContext()).updateCrime(crime)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 }

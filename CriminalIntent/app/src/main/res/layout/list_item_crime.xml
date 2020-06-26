@@ -22,7 +22,7 @@
             android:id="@+id/crimeTitle"
             android:text="@{crime.title}"
             tools:text="@string/crime_title"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textColor="@android:color/black"
             android:elegantTextHeight="true"
             android:maxLines="1"

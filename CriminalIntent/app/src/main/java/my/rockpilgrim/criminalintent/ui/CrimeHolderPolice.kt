@@ -18,7 +18,7 @@ class CrimeHolderPolice(private val binding: ListItemCrimePoliseBinding) :
         // Show Detail View
         binding.root.setOnClickListener {
             makeToast(crime.title)
-            startActivity(context = binding.root.context, crimeId = crime.mID)
+            startActivity(context = binding.root.context, crime = crime)
         }
     }
 }

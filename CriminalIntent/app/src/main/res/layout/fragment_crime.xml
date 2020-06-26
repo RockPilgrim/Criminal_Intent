@@ -61,6 +61,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/crimeTitle"
                     android:text="@{crime.title}"
+                    android:maxLines="1"
                     android:hint="@string/crime_title_hint"
                     android:paddingVertical="16dp"
                     android:layout_width="match_parent"

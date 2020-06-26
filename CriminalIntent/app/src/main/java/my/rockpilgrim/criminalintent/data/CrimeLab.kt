@@ -9,7 +9,8 @@ import my.rockpilgrim.criminalintent.data.CrimeDbSchema.CrimeTable
 import java.io.File
 import java.util.*
 
-object CrimeLab {
+object CrimeLab{
+
 
 
 //    val crimes: List<Crime> = listOf()
@@ -81,6 +82,7 @@ object CrimeLab {
     }
 
     fun delete(crime: Crime) {
+        Log.d(TAG, "Delete")
         dataBase.delete(
             CrimeTable.NAME,
             CrimeTable.Cols.UUID + " =?",

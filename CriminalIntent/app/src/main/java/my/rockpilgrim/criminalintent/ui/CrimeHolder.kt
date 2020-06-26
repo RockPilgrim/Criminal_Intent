@@ -2,6 +2,7 @@ package my.rockpilgrim.criminalintent.ui
 
 import my.rockpilgrim.criminalintent.data.Crime
 import my.rockpilgrim.criminalintent.data.CrimeDbSchema
+import my.rockpilgrim.criminalintent.data.CrimeLab
 import my.rockpilgrim.criminalintent.databinding.ListItemCrimeBinding
 
 class CrimeHolder(private val binding: ListItemCrimeBinding) :
@@ -11,9 +12,10 @@ class CrimeHolder(private val binding: ListItemCrimeBinding) :
 //        Log.d("CrimeHolder", "bind(${adapterPosition})")
         binding.crime = crime
 
+        val c=
         binding.root.setOnClickListener {
             makeToast(crime.title)
-            startActivity(context = binding.root.context, crimeId = crime.mID)
+            startActivity(context = binding.root.context, crime = crime)
         }
     }
 }

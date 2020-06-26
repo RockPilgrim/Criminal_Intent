@@ -20,6 +20,6 @@ class ViewPagerFragmentAdapter(
 
     override fun createFragment(position: Int): Fragment {
         val crime:Crime = crimes[position]
-        return CrimeFragment().newInstance(crimeId = crime.mID)
+        return CrimeFragment.newInstance(crimeId = crime.mID)
     }
 }

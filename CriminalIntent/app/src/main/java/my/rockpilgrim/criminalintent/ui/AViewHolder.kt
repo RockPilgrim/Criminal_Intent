@@ -10,7 +10,7 @@ import java.util.*
 
 abstract class AViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    // Page 330
+    // Page 363
     abstract fun bind(crime: Crime)
 
     protected fun makeToast(message: String) {
@@ -20,9 +20,7 @@ abstract class AViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    protected fun startActivity(context: Context, crimeId: UUID) {
-        val intent = CrimePagerActivity().newIntent(packageContext = context, crimeId = crimeId)
-        context.startActivity(intent)
+    protected fun startActivity(context: Context, crime: Crime) {
+        (context as CrimeListFragment.Callbacks).onCrimeSelected(crime = crime)
     }
-    // Сдэк
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import my.rockpilgrim.criminalintent.AdapterDismissElement
 import my.rockpilgrim.criminalintent.data.Crime
 import my.rockpilgrim.criminalintent.data.NO_POLICE
 import my.rockpilgrim.criminalintent.databinding.ListItemCrimeBinding

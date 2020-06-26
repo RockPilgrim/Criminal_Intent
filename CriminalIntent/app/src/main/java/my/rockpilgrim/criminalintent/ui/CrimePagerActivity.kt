@@ -13,7 +13,7 @@ import my.rockpilgrim.criminalintent.data.CrimeLab
 import my.rockpilgrim.criminalintent.databinding.ActivityCrimePagerBinding
 import java.util.*
 
-class CrimePagerActivity:AppCompatActivity() {
+class CrimePagerActivity:AppCompatActivity(),CrimeFragment.CallBacks {
 
     private val TAG = "CrimePagerActivity"
     private val EXTRA_CRIME_ID = "my.rockpilgrim.crimiinalintent.crime_id"
@@ -48,6 +48,8 @@ class CrimePagerActivity:AppCompatActivity() {
         return intent
     }
 
+    override fun onCrimeUpdated(crime: Crime) {
+    }
 
 
 }

@@ -12,7 +12,7 @@
     </data>
 
     <LinearLayout
-        android:background="#fcc"
+        android:background="@android:color/darker_gray"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/crimeTitle"
                 android:text="@{crime.title}"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textColor="@android:color/black"
                 tools:text="@string/crime_title"
                 android:layout_width="match_parent"

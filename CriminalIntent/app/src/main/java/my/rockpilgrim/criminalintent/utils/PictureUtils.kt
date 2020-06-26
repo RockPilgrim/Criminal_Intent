@@ -40,7 +40,7 @@ object PictureUtils {
         val size: Point = Point()
         activity.windowManager.defaultDisplay.getSize(size)
 
-        return getScaledBitmap(path, size.x, size.y)
+        return getScaledBitmap(path, size.y, size.x)
     }
 
 }
